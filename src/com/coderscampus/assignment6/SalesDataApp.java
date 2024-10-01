@@ -10,6 +10,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SalesDataApp {
+	public static final String RESET = "\033[0m";
+	public static final String GREEN = "\033[32m";
+	public static final String RED = "\033[31m";
+	public static final String YELLOW = "\033[33m";
+	public static final String BLUE = "\033[34m";
+	
 
 	public static void main(String[] args) throws IOException {
 		//***************************** MODEL 3 *******************************
@@ -36,7 +42,7 @@ public class SalesDataApp {
 		SalesData worstMonth3 = model3Sales.stream()
 							  .min(Comparator.comparingInt(record -> record.unitsSold))
 							  .orElse(null);			  
-		System.out.println("Model 3 Yearly Sales Report");
+		System.out.println(YELLOW + "Model 3 Yearly Sales Report");
 		System.out.println("----------------");
 		System.out.println("2017 -> " + sales32017);
 		System.out.println("2018 -> " + sales32018);
@@ -45,7 +51,7 @@ public class SalesDataApp {
 			System.out.println("The best month for the Model 3 was: " + bestMonth3.date);
 		}
 		if (worstMonth3 != null) {
-			System.out.println("The worst month for the Model 3 was: " + worstMonth3.date);
+			System.out.println("The worst month for the Model 3 was: " + RED + worstMonth3.date + RESET);
 		}
 		System.out.println("");
 		
@@ -78,7 +84,7 @@ public class SalesDataApp {
 		SalesData worstMonthS = modelSSales.stream()
 							  .min(Comparator.comparingInt(record -> record.unitsSold))
 							  .orElse(null);			  
-		System.out.println("Model S Yearly Sales Report");
+		System.out.println(BLUE + "Model S Yearly Sales Report");
 		System.out.println("----------------");
 		System.out.println("2016 -> " + salesS2016);
 		System.out.println("2017 -> " + salesS2017);
@@ -88,7 +94,7 @@ public class SalesDataApp {
 			System.out.println("The best month for the Model S was: " + bestMonthS.date);
 		}
 		if (worstMonthS != null) {
-			System.out.println("The worst month for the Model S was: " + worstMonthS.date);
+			System.out.println(BLUE + "The worst month for the Model S was: " + RED + worstMonthS.date + RESET);
 		}
 		System.out.println("");
 		
@@ -121,7 +127,7 @@ public class SalesDataApp {
 		SalesData worstMonthX = modelXSales.stream()
 							  .min(Comparator.comparingInt(record -> record.unitsSold))
 							  .orElse(null);			  
-		System.out.println("Model X Yearly Sales Report");
+		System.out.println(GREEN + "Model X Yearly Sales Report");
 		System.out.println("----------------");
 		System.out.println("2016 -> " + salesX2016);
 		System.out.println("2017 -> " + salesX2017);
@@ -131,10 +137,11 @@ public class SalesDataApp {
 			System.out.println("The best month for the Model X was: " + bestMonthX.date);
 		}
 		if (worstMonthX != null) {
-			System.out.println("The worst month for the Model X was: " + worstMonthX.date);
+			System.out.println("The worst month for the Model X was: " + RED + worstMonthX.date + RESET);
 		}
 	}
 	
+	//***************************** Read Data Method *******************************
 	public static List<SalesData> readSalesData(String filePath) throws IOException {
 		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMM-yy");
 		List<SalesData> salesRecords = Files.lines(Paths.get(filePath)).skip(1).map(line -> {

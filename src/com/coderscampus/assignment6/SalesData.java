@@ -16,16 +16,16 @@ public class SalesData {
 		return date;
 	}
 
-	public void setDate(YearMonth date) {
-		this.date = date;
-	}
+//	public void setDate(YearMonth date) {
+//		this.date = date;
+//	}
 
 	public int getUnitsSold() {
 		return unitsSold;
 	}
 
-	public void setUnitsSold(int unitsSold) {
-		this.unitsSold = unitsSold;
-	}
+//	public void setUnitsSold(int unitsSold) {
+//		this.unitsSold = unitsSold;
+//	}
 
 }
