@@ -1,64 +1,150 @@
 package com.coderscampus.assignment6;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SalesDataApp {
 
 	public static void main(String[] args) throws IOException {
-		List<SalesData> model3Sales = new ArrayList<>();
-		List<SalesData> modelSSales = new ArrayList<>();
-		List<SalesData> modelXSales = new ArrayList<>();
+		//***************************** MODEL 3 *******************************
+		List<SalesData> model3Sales = readSalesData("model3.csv");
+		
+		int sales32017 = model3Sales.stream()
+					    .filter(record -> record.date.getYear()== 2017)
+					    .mapToInt(record -> record.unitsSold)
+					    .sum();
+		
+		int sales32018 = model3Sales.stream()
+			    .filter(record -> record.date.getYear()== 2018)
+			    .mapToInt(record -> record.unitsSold)
+			    .sum();
+		
+		int sales32019 = model3Sales.stream()
+			    .filter(record -> record.date.getYear()== 2019)
+			    .mapToInt(record -> record.unitsSold)
+			    .sum();
 
-		model3LoadData(model3Sales);
-		modelSLoadData(modelSSales);
-		modelXLoadData(modelXSales);
-	}
+		SalesData bestMonth3 = model3Sales.stream()
+							  .max(Comparator.comparingInt(record -> record.unitsSold))
+							  .orElse(null);
+		SalesData worstMonth3 = model3Sales.stream()
+							  .min(Comparator.comparingInt(record -> record.unitsSold))
+							  .orElse(null);			  
+		System.out.println("Model 3 Yearly Sales Report");
+		System.out.println("----------------");
+		System.out.println("2017 -> " + sales32017);
+		System.out.println("2018 -> " + sales32018);
+		System.out.println("2019 -> " + sales32019);
+		if (bestMonth3 != null) {
+			System.out.println("The best month for the Model 3 was: " + bestMonth3.date);
+		}
+		if (worstMonth3 != null) {
+			System.out.println("The worst month for the Model 3 was: " + worstMonth3.date);
+		}
+		System.out.println("");
+		
+		//***************************** MODEL S *******************************
+		List<SalesData> modelSSales = readSalesData("modelS.csv");
+		
+		int salesS2016 = modelSSales.stream()
+			    .filter(record -> record.date.getYear()== 2016)
+			    .mapToInt(record -> record.unitsSold)
+			    .sum();
+		
+		int salesS2017 = modelSSales.stream()
+					    .filter(record -> record.date.getYear()== 2017)
+					    .mapToInt(record -> record.unitsSold)
+					    .sum();
+		
+		int salesS2018 = modelSSales.stream()
+			    .filter(record -> record.date.getYear()== 2018)
+			    .mapToInt(record -> record.unitsSold)
+			    .sum();
+		
+		int salesS2019 = modelSSales.stream()
+			    .filter(record -> record.date.getYear()== 2019)
+			    .mapToInt(record -> record.unitsSold)
+			    .sum();
 
-	private static void modelXLoadData(List<SalesData> model3Sales) throws FileNotFoundException, IOException {
-		BufferedReader modelXReader = new BufferedReader(new FileReader("modelX.csv"));
-		String line;
-		modelXReader.readLine();
-		while ((line = modelXReader.readLine()) != null) {
-			String[] data = line.split(",");
-			String date = data[0];
-			int unitsSold = Integer.parseInt(data[1]);
-			SalesData salesData = new SalesData(date, unitsSold);
-			model3Sales.add(salesData);
-			modelXReader.close();
+		SalesData bestMonthS = modelSSales.stream()
+							  .max(Comparator.comparingInt(record -> record.unitsSold))
+							  .orElse(null);
+		SalesData worstMonthS = modelSSales.stream()
+							  .min(Comparator.comparingInt(record -> record.unitsSold))
+							  .orElse(null);			  
+		System.out.println("Model S Yearly Sales Report");
+		System.out.println("----------------");
+		System.out.println("2016 -> " + salesS2016);
+		System.out.println("2017 -> " + salesS2017);
+		System.out.println("2018 -> " + salesS2018);
+		System.out.println("2019 -> " + salesS2019);
+		if (bestMonthS != null) {
+			System.out.println("The best month for the Model S was: " + bestMonthS.date);
+		}
+		if (worstMonthS != null) {
+			System.out.println("The worst month for the Model S was: " + worstMonthS.date);
+		}
+		System.out.println("");
+		
+		//***************************** MODEL X *******************************
+		List<SalesData> modelXSales = readSalesData("modelX.csv");
+		
+		int salesX2016 = modelXSales.stream()
+			    .filter(record -> record.date.getYear()== 2016)
+			    .mapToInt(record -> record.unitsSold)
+			    .sum();
+		
+		int salesX2017 = modelXSales.stream()
+					    .filter(record -> record.date.getYear()== 2017)
+					    .mapToInt(record -> record.unitsSold)
+					    .sum();
+		
+		int salesX2018 = modelXSales.stream()
+			    .filter(record -> record.date.getYear()== 2018)
+			    .mapToInt(record -> record.unitsSold)
+			    .sum();
+		
+		int salesX2019 = modelXSales.stream()
+			    .filter(record -> record.date.getYear()== 2019)
+			    .mapToInt(record -> record.unitsSold)
+			    .sum();
+
+		SalesData bestMonthX = modelXSales.stream()
+							  .max(Comparator.comparingInt(record -> record.unitsSold))
+							  .orElse(null);
+		SalesData worstMonthX = modelXSales.stream()
+							  .min(Comparator.comparingInt(record -> record.unitsSold))
+							  .orElse(null);			  
+		System.out.println("Model X Yearly Sales Report");
+		System.out.println("----------------");
+		System.out.println("2016 -> " + salesX2016);
+		System.out.println("2017 -> " + salesX2017);
+		System.out.println("2018 -> " + salesX2018);
+		System.out.println("2019 -> " + salesX2019);
+		if (bestMonthX != null) {
+			System.out.println("The best month for the Model X was: " + bestMonthX.date);
+		}
+		if (worstMonthX != null) {
+			System.out.println("The worst month for the Model X was: " + worstMonthX.date);
 		}
 	}
-
-	private static void modelSLoadData(List<SalesData> model3Sales) throws FileNotFoundException, IOException {
-		BufferedReader modelSReader = new BufferedReader(new FileReader("modelS.csv"));
-		String line;
-		modelSReader.readLine();
-		while ((line = modelSReader.readLine()) != null) {
+	
+	public static List<SalesData> readSalesData(String filePath) throws IOException {
+		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMM-yy");
+		List<SalesData> salesRecords = Files.lines(Paths.get(filePath)).skip(1).map(line -> {
 			String[] data = line.split(",");
-			String date = data[0];
-			int unitsSold = Integer.parseInt(data[1]);
-			SalesData salesData = new SalesData(date, unitsSold);
-			model3Sales.add(salesData);
-			modelSReader.close();
-		}
-	}
+			YearMonth date = YearMonth.parse(data[0], inputFormatter);
+			int sales = Integer.parseInt(data[1]);
+			return new SalesData(date, sales);
+		}).collect(Collectors.toList());
 
-	private static void model3LoadData(List<SalesData> model3Sales) throws FileNotFoundException, IOException {
-		BufferedReader model3Reader = new BufferedReader(new FileReader("model3.csv"));
-		String line;
-		model3Reader.readLine();
-		while ((line = model3Reader.readLine()) != null) {
-			String[] data = line.split(",");
-			String date = data[0];
-			int unitsSold = Integer.parseInt(data[1]);
-			SalesData salesData = new SalesData(date, unitsSold);
-			model3Sales.add(salesData);
-			model3Reader.close();
-		}
-	}
+		return salesRecords;
 
+	}
 }
